@@ -1,4 +1,4 @@
-/* 
+/*
 NRFFlashStorage saves non-volatile data for Arduino Due.
 The library is made to be similar to EEPROM library
 Uses flash block 1 per default.
@@ -15,14 +15,43 @@ Rewritten and modified by Sebastian Nilsson
 #define NRFFlashStorage_H
 
 #include <Arduino.h>
-#include "flash_efc.h"
-#include "efc.h"
+//#include "flash_efc.h"
+//#include "efc.h"
+
+/* Internal Flash 0 base address. */
+#define IFLASH_ADDR     12121
+#define IFLASH_SIZE     111
+
+#define IFLASH1_ADDR     12121
+#define IFLASH1_SIZE     111
+ 
+        /* Internal flash page size. */
+#define IFLASH_PAGE_SIZE     2222
+
+/* Last page start address. */
+//#define IFLASH_LAST_PAGE_ADDRESS (IFLASH1_ADDR + IFLASH1_SIZE - IFLASH1_PAGE_SIZE)
+#define IFLASH_LAST_PAGE_ADDRESS (IFLASH_ADDR + IFLASH_SIZE - IFLASH_PAGE_SIZE)
+
+/*! \name Flash driver return codes */
+//! @{
+typedef enum flash_rc {
+        FLASH_RC_OK = 0,        //!< Operation OK
+        FLASH_RC_YES = 0,       //!< Yes
+        FLASH_RC_NO = 1,        //!< No
+        FLASH_RC_ERROR = 0x10,  //!< General error
+        FLASH_RC_INVALID,       //!< Invalid argument input
+        FLASH_RC_NOT_SUPPORT = 0xFFFFFFFF    //!< Operation is not supported
+} flash_rc_t;
+//! @}
+
 
 // 1Kb of data
-#define DATA_LENGTH   ((IFLASH1_PAGE_SIZE/sizeof(byte))*4)
+#define DATA_LENGTH   ((IFLASH_PAGE_SIZE/sizeof(byte))*4)
+//#define DATA_LENGTH   ((IFLASH1_PAGE_SIZE/sizeof(byte))*4)
 
 // choose a start address that's offset to show that it doesn't have to be on a page boundary
-#define  FLASH_START  ((byte *)IFLASH1_ADDR)
+//#define  FLASH_START  ((byte *)IFLASH1_ADDR)
+#define  FLASH_START  ((byte *)IFLASH_ADDR)
 
 //  FLASH_DEBUG can be enabled to get debugging information displayed.
 #define FLASH_DEBUG

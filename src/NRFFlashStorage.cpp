@@ -11,7 +11,8 @@ NRFFlashStorage::NRFFlashStorage() {
 }
 
 byte NRFFlashStorage::read(uint32_t address) {
-  return FLASH_START[address];
+///  return FLASH_START[address];
+return 0;
 }
 byte* NRFFlashStorage::readAddress(uint32_t address) {
   return FLASH_START+address;
